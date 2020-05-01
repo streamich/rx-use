@@ -1,0 +1,71 @@
+{
+  "name": "rx-use",
+  "version": "0.0.1",
+  "description": "",
+  "author": {
+    "name": "streamich",
+    "url": "https://github.com/streamich"
+  },
+  "homepage": "https://github.com/streamich/rx-use",
+  "repository": "streamich/rx-use",
+  "license": "Unlicense",
+  "engines": {
+    "node": ">=6.9"
+  },
+  "main": "lib/index.js",
+  "files": [
+    "lib/"
+  ],
+  "scripts": {
+    "prettier": "prettier --ignore-path .gitignore --write 'src/**/*.{ts,tsx,js,jsx}'",
+    "prettier:diff": "prettier -l 'src/**/*.{ts,tsx,js,jsx}'",
+    "prepush": "yarn prettier:diff",
+    "precommit": "pretty-quick --staged && yarn tslint",
+    "tslint": "tslint 'src/**/*.{js,jsx,ts,tsx}' -t verbose",
+    "commitmsg": "commitlint -E GIT_PARAMS",
+    "clean": "rimraf lib",
+    "build": "tsc",
+    "test": "jest --no-cache --config='jest.config.js'",
+    "release": "semantic-release"
+  },
+  "keywords": [],
+  "dependencies": {},
+  "devDependencies": {
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
+    "@semantic-release/changelog": "^5.0.1",
+    "@semantic-release/git": "^9.0.0",
+    "@semantic-release/npm": "^7.0.5",
+    "@types/jest": "^25.2.1",
+    "husky": "^4.2.5",
+    "jest": "^25.5.3",
+    "prettier": "^2.0.5",
+    "pretty-quick": "^2.0.1",
+    "rimraf": "^3.0.2",
+    "semantic-release": "^17.0.7",
+    "ts-jest": "^25.4.0",
+    "ts-node": "^8.9.1",
+    "tslint": "^6.1.2",
+    "tslint-config-common": "^1.6.0",
+    "typescript": "^3.8.3"
+  },
+  "types": "lib/index.d.ts",
+  "typings": "lib/index.d.ts",
+  "release": {
+    "verifyConditions": [
+      "@semantic-release/changelog",
+      "@semantic-release/npm",
+      "@semantic-release/git"
+    ],
+    "prepare": [
+      "@semantic-release/changelog",
+      "@semantic-release/npm",
+      "@semantic-release/git"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "git-cz"
+    }
+  }
+}
