@@ -1,1 +1,1 @@
-console.log('Hello world!'); // tslint:disable-line no-console
+export * from './location$';

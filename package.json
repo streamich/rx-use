@@ -13,8 +13,13 @@
     "node": ">=6.9"
   },
   "main": "lib/index.js",
+  "module": "esm/index.js",
+  "types": "lib/index.d.ts",
+  "typings": "lib/index.d.ts",
+  "sideEffects": false,
   "files": [
-    "lib/"
+    "lib/",
+    "esm/"
   ],
   "scripts": {
     "prettier": "prettier --ignore-path .gitignore --write 'src/**/*.{ts,tsx,js,jsx}'",
@@ -23,8 +28,10 @@
     "precommit": "pretty-quick --staged && yarn tslint",
     "tslint": "tslint 'src/**/*.{js,jsx,ts,tsx}' -t verbose",
     "commitmsg": "commitlint -E GIT_PARAMS",
-    "clean": "rimraf lib",
-    "build": "tsc",
+    "clean": "rimraf lib esm",
+    "build:cjs": "tsc",
+    "build:es": "tsc -m esNext --target es6 --outDir esm",
+    "build": "yarn build:cjs && yarn build:es",
     "test": "jest --no-cache --config='jest.config.js'",
     "release": "semantic-release"
   },
@@ -53,8 +60,6 @@
     "tslint-config-common": "^1.6.0",
     "typescript": "^3.8.3"
   },
-  "types": "lib/index.d.ts",
-  "typings": "lib/index.d.ts",
   "release": {
     "verifyConditions": [
       "@semantic-release/changelog",
