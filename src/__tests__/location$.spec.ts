@@ -1,11 +1,11 @@
-import {location$, LocationFields, HistoryFields} from './location$';
-const {window, _listeners} = require('./window');
+import {location$, LocationFields, HistoryFields} from '../location$';
+const {window, _listeners} = require('../window');
 
 type Listener = {event: string; listener: (...args: any) => void};
 
 const listeners: Listener[] = _listeners;
 
-jest.mock('./window', () => {
+jest.mock('../window', () => {
   const listeners: Listener[] = [];
   const removedListeners: Listener[] = [];
   const location: LocationFields = {
