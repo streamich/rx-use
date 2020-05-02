@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/streamich/rx-use/compare/v1.0.0...v1.1.0) (2020-05-02)
+
+
+### Features
+
+* 🎸 add pathname$ observable ([08857ad](https://github.com/streamich/rx-use/commit/08857adff273bb5441a3ec47a60ca20d047fc8ba))
+
 # 1.0.0 (2020-05-02)
 
 
