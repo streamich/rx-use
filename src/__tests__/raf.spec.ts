@@ -1,5 +1,5 @@
 import {raf, WindowWithRaf} from '../raf';
-import { Subject } from 'rxjs';
+import {Subject} from 'rxjs';
 const {flush} = require('../window');
 
 jest.mock('../window', () => {
@@ -16,7 +16,7 @@ jest.mock('../window', () => {
       return frame;
     },
     cancelAnimationFrame: (frame) => {
-      const index = listeners.findIndex(item => item[0] === frame);
+      const index = listeners.findIndex((item) => item[0] === frame);
       if (index > -1) {
         listeners.splice(index, 1);
       }
@@ -95,14 +95,14 @@ test('throttles events in multiple animation frame iterations', () => {
   flush();
   flush();
   expect(spy).toHaveBeenCalledTimes(2);
-  
+
   subj.next(6);
   flush();
   expect(spy).toHaveBeenCalledTimes(3);
   flush();
   flush();
   expect(spy).toHaveBeenCalledTimes(3);
-  
+
   subj.next(7);
   subj.next(8);
   subj.next(9);
@@ -137,14 +137,14 @@ test('stops when source observable completes', () => {
   flush();
   flush();
   expect(spy).toHaveBeenCalledTimes(2);
-  
+
   subj.next(6);
   flush();
   expect(spy).toHaveBeenCalledTimes(3);
   flush();
   flush();
   expect(spy).toHaveBeenCalledTimes(3);
-  
+
   subj.next(7);
   subj.next(8);
   subj.next(9);

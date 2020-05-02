@@ -61,7 +61,7 @@ test('emits new value when window resizes', () => {
   expect(spy).toHaveBeenCalledTimes(2);
 });
 
-test('does not emit new value when window size hasn\'t changed', () => {
+test("does not emit new value when window size hasn't changed", () => {
   const spy = jest.fn();
   windowSizeRaf$.subscribe(spy);
   expect(spy).toHaveBeenCalledTimes(1);

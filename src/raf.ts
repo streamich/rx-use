@@ -4,7 +4,7 @@ import {window} from './window';
 export type WindowWithRaf = Pick<Window, 'requestAnimationFrame' | 'cancelAnimationFrame'>;
 
 const isWindowWithRaf = (w: unknown): w is WindowWithRaf =>
-  (typeof w === 'object') && !!(w as WindowWithRaf)?.requestAnimationFrame;
+  typeof w === 'object' && !!(w as WindowWithRaf)?.requestAnimationFrame;
 
 /**
  * De-bounces an observable using `window.requestAnimationFrame`. Emits the first
@@ -32,7 +32,7 @@ export const raf = <T>(): OperatorFunction<T, T> => (observable: Observable<T>):
   };
 
   observable.subscribe(
-    value => {
+    (value) => {
       if (!frame) {
         subject.next(value);
         loop();
@@ -41,7 +41,7 @@ export const raf = <T>(): OperatorFunction<T, T> => (observable: Observable<T>):
         hasNext = true;
       }
     },
-    error => {
+    (error) => {
       if (frame) w.cancelAnimationFrame(frame as number);
       subject.error(error);
     },
