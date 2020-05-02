@@ -22,12 +22,12 @@ const createBrowserWindowSize$ = () => {
   const windowSize$ = new BehaviorSubject(state());
 
   fromEvent(window, 'resize').pipe(
-    share(),
     filter(() => {
       const {width, height} = windowSize$.getValue();
       return (width !== w.innerWidth) || (height !== w.innerHeight);
     }),
     map(state),
+    share(),
   ).subscribe(windowSize$);
 
   return windowSize$;
