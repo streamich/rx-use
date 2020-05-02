@@ -9,9 +9,6 @@
   "homepage": "https://github.com/streamich/rx-use",
   "repository": "streamich/rx-use",
   "license": "Unlicense",
-  "engines": {
-    "node": ">=6.9"
-  },
   "main": "lib/index.js",
   "module": "esm/index.js",
   "types": "lib/index.d.ts",
