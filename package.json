@@ -30,6 +30,9 @@
   },
   "keywords": [],
   "dependencies": {},
+  "peerDependencies": {
+    "rxjs": "*"
+  },
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
@@ -42,6 +45,7 @@
     "prettier": "^2.0.5",
     "pretty-quick": "^2.0.1",
     "rimraf": "^3.0.2",
+    "rxjs": "^6.5.5",
     "semantic-release": "^17.0.7",
     "ts-jest": "^25.4.0",
     "ts-node": "^8.9.1",

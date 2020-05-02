@@ -7,5 +7,5 @@ module.exports = {
     '^.+\.tsx?$': 'ts-jest',
   },
   transformIgnorePatterns: [],
-  testRegex: '.*/__tests__/.*\.(test|spec)\.(jsx?|tsx?)$',
+  testRegex: '.*\.(test|spec)\.(jsx?|tsx?)$',
 };
