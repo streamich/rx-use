@@ -6,6 +6,7 @@ Sensor and side-effect library for [`rxjs`](https://rxjs-dev.firebaseapp.com/).
 ## Observables
 
 - [`location$`](./docs/location$.md) &mdash; browser location and history sensor.
+  - [`pathname$`](./docs/pathname$.md) &mdash; browser location pathname sensor.
 - [`windowSize$`](./docs/windowSize$.md) and [`windowSizeRaf$`](./docs/windowSizeRaf$.md) &mdash; browser window dimension sensor.
 
 
