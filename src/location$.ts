@@ -1,5 +1,5 @@
-import { BehaviorSubject, merge, from, fromEvent, Observable } from 'rxjs';
-import { map, share, distinctUntilChanged, filter } from 'rxjs/operators';
+import { BehaviorSubject, merge, fromEvent, Observable } from 'rxjs';
+import { map, share, filter } from 'rxjs/operators';
 import { window } from './window';
 
 const patchHistoryMethod = (method: 'pushState' | 'replaceState', eventName: string) => {
@@ -55,8 +55,6 @@ const createBrowserLocation$ = (): BehaviorSubject<LocationState> => {
   ).pipe(
     share(),
     filter(() => window!.location.href !== location$.getValue().href),
-    // map<LocationStateEvent, [LocationStateEvent, string]>(event => [event, window!.location.href]),
-    // distinctUntilChanged(([, href1], [, href2]) => href1 === href2),
     map(event => buildState(event, window!.location, window!.history))
   ).subscribe(location$);
   return location$;
