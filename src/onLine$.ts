@@ -4,9 +4,7 @@ import {map, filter} from 'rxjs/operators';
 
 const navigator = (window && window.navigator) || undefined;
 
-export const onLine$: BehaviorSubject<boolean> = !!navigator
-  ? new BehaviorSubject(navigator.onLine)
-  : new BehaviorSubject<boolean>(true);
+export const onLine$ = new BehaviorSubject<boolean>(!!navigator ? navigator.onLine : true);
 
 if (!!window && !!navigator) {
   fromEvent(window, 'online')
