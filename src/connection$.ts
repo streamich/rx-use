@@ -18,14 +18,16 @@ export interface NavigatorWithConnection extends Navigator {
   webkitConnection?: Connection;
 }
 
-const navigator: NavigatorWithConnection | undefined = (window && (window.navigator as NavigatorWithConnection)) || undefined;
-const connection: Connection | undefined = (navigator && (navigator.connection || navigator.mozConnection || navigator.webkitConnection))
-  ?  (navigator.connection || navigator.mozConnection || navigator.webkitConnection)
-  : undefined;
+const navigator: NavigatorWithConnection | undefined =
+  (window && (window.navigator as NavigatorWithConnection)) || undefined;
+const connection: Connection | undefined =
+  navigator && (navigator.connection || navigator.mozConnection || navigator.webkitConnection)
+    ? navigator.connection || navigator.mozConnection || navigator.webkitConnection
+    : undefined;
 
 const state = (): ConnectionState => {
   if (!connection) return {};
-  const { downlink, downlinkMax, effectiveType, type, rtt } = connection;
+  const {downlink, downlinkMax, effectiveType, type, rtt} = connection;
   return {
     downlink,
     downlinkMax,
@@ -38,9 +40,5 @@ const state = (): ConnectionState => {
 export const connection$: BehaviorSubject<ConnectionState> = new BehaviorSubject(state());
 
 if (!!connection) {
-  fromEvent(connection, 'change')
-    .pipe(
-      map(state)
-    )
-    .subscribe(connection$);
+  fromEvent(connection, 'change').pipe(map(state)).subscribe(connection$);
 }

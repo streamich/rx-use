@@ -9,8 +9,10 @@ export const onLine$: BehaviorSubject<boolean> = !!navigator
   : new BehaviorSubject<boolean>(true);
 
 if (!!window && !!navigator) {
-  fromEvent(window, 'online').pipe(
-    map(() => navigator.onLine),
-    filter(onLine => onLine !== onLine$.getValue()),
-  ).subscribe(onLine$);
+  fromEvent(window, 'online')
+    .pipe(
+      map(() => navigator.onLine),
+      filter((onLine) => onLine !== onLine$.getValue()),
+    )
+    .subscribe(onLine$);
 }
