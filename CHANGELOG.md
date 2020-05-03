@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/streamich/rx-use/compare/v1.1.0...v1.2.0) (2020-05-03)
+
+
+### Features
+
+* 🎸 add onLine$, connection$ and network$ observables ([b36ede5](https://github.com/streamich/rx-use/commit/b36ede5696b3badf740a61efc36c411065ef5822))
+
 # [1.1.0](https://github.com/streamich/rx-use/compare/v1.0.0...v1.1.0) (2020-05-02)
 
 
