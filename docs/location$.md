@@ -10,3 +10,9 @@ location$.subscribe(({ protocol }) => {
   console.log(protocol); // https:
 });
 ```
+
+Now you can listen to browser's `history` updates.
+
+```js
+history.pushState( ... );
+```
