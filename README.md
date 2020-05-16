@@ -12,6 +12,9 @@ Sensor and side-effect library for [`rxjs`](https://rxjs-dev.firebaseapp.com/).
   - [`connection$`](./docs/connection$.md) &mdash; information about user's network connection.
 - [`windowSize$`](./docs/windowSize$.md) and [`windowSizeRaf$`](./docs/windowSizeRaf$.md) &mdash; browser window dimension sensor.
 - [`matchMedia$()`](./docs/matchMedia$.md) &mdash; returns boolean indicating media query match.
+  - [`colorSchemeDark$()`](./docs/colorSchemeDark$.md) &mdash; whether user selected dark theme in system settings.
+  - [`colorSchemeLight$()`](./docs/colorSchemeLight$.md) &mdash; whether user selected light theme in system settings.
+  - [`colorSchemeNoPreference$()`](./docs/colorSchemeNoPreference$.md) &mdash; whether user has no preference for color scheme.
 
 
 ## Operators
