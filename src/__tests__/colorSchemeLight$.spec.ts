@@ -1,4 +1,4 @@
-import {colorSchemeDark$} from '../colorSchemeDark$';
+import {colorSchemeLight$} from '../colorSchemeLight$';
 const {window, _query, _addListener, _removeListener, _mql} = require('../window');
 
 jest.mock('../window', () => {
@@ -41,19 +41,19 @@ beforeEach(() => {
 });
 
 test('can subscribe and unsubscribe', () => {
-  colorSchemeDark$.subscribe(() => {}).unsubscribe();
+  colorSchemeLight$.subscribe(() => {}).unsubscribe();
 });
 
-test('matches media query for dark theme', () => {
-  expect(_query[0]).toMatchInlineSnapshot(`"(prefers-color-scheme: dark)"`);
+test('matches media query for light theme', () => {
+  expect(_query[0]).toMatchInlineSnapshot(`"(prefers-color-scheme: light)"`);
 });
 
 test('can have multiple subscribers', () => {
   const spy1 = jest.fn();
   const spy2 = jest.fn();
 
-  colorSchemeDark$.subscribe(spy1);
-  colorSchemeDark$.subscribe(spy2);
+  colorSchemeLight$.subscribe(spy1);
+  colorSchemeLight$.subscribe(spy2);
 
   _mql[0].matches = true;
   _addListener[0]();
