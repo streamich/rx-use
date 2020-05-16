@@ -1,6 +1,6 @@
 # rx-use
 
-Sensor and side-effect library for [`rxjs`](https://rxjs-dev.firebaseapp.com/).
+Sensor and side-effect library for [`rxjs`](https://rxjs-dev.firebaseapp.com/). Do you want to contribute? See, [`help wanted`](https://github.com/streamich/rx-use/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22).
 
 
 ## Observables
