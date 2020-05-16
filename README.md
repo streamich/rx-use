@@ -11,6 +11,7 @@ Sensor and side-effect library for [`rxjs`](https://rxjs-dev.firebaseapp.com/).
   - [`onLine$`](./docs/onLine$.md) &mdash; `boolean` whether user is on-line.
   - [`connection$`](./docs/connection$.md) &mdash; information about user's network connection.
 - [`windowSize$`](./docs/windowSize$.md) and [`windowSizeRaf$`](./docs/windowSizeRaf$.md) &mdash; browser window dimension sensor.
+- [`matchMedia$()`](./docs/matchMedia$.md) &mdash; returns boolean indicating media query match.
 
 
 ## Operators
