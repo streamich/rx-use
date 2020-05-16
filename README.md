@@ -19,6 +19,16 @@ Sensor and side-effect library for [`rxjs`](https://rxjs-dev.firebaseapp.com/).
 - [`raf()`](./docs/raf.md) &mdash; de-bounces events using `window.requestAnimationFrame`.
 
 
+## Other
+
+Most observables imported from this library have `ReadonlyBehaviorSubject` type.
+Which is an `Observable` with an extra `.getValue()` to access the current value of the observable.
+
+```ts
+type ReadonlyBehaviorSubject<T> = Observable<T> & Pick<BehaviorSubject<T>, 'getValue'>;
+```
+
+
 ## License
 
 [Unlicense](LICENSE) &mdash; public domain.
