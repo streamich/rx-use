@@ -1,17 +1,20 @@
-import {BehaviorSubject, fromEventPattern} from 'rxjs';
+import {Observable, BehaviorSubject} from 'rxjs';
 import {window} from './window';
 import {ReadonlyBehaviorSubject} from './types';
 
 const matchMediaClient$ = (query: string): ReadonlyBehaviorSubject<boolean> => {
   const mql = window!.matchMedia(query);
-  const isMatch = mql.matches;
-  const subject = new BehaviorSubject<boolean>(isMatch);
-  const onChange = () => subject.next(mql.matches);
-  const addHandler = () => mql.addListener(onChange)
-  const removeHandler = () => mql.removeListener(onChange);
-  const changes$ = fromEventPattern<boolean>(addHandler, removeHandler);
-  changes$.subscribe(subject);
-  return subject;
+  let last: boolean = mql.matches;
+  const observable:  ReadonlyBehaviorSubject<boolean> = Observable.create(observer => {
+    const listener = () => {
+      if (last === mql.matches) return;
+      observer.next(last = mql.matches);
+    };
+    mql.addListener(listener);
+    return () => mql.removeListener(listener);
+  });
+  observable.getValue = () => mql.matches;
+  return observable;
 };
 
 const matchMediaServer$ = (query: string): ReadonlyBehaviorSubject<boolean> =>
