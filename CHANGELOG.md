@@ -1,3 +1,14 @@
+# [1.4.0](https://github.com/streamich/rx-use/compare/v1.3.0...v1.4.0) (2020-05-16)
+
+
+### Features
+
+* 🎸 add colorSchemeDark$ ([fd75060](https://github.com/streamich/rx-use/commit/fd7506014e1ba4d15317135ef0cce1ad726c759d))
+* 🎸 add colorSchemeLight$ ([c6161db](https://github.com/streamich/rx-use/commit/c6161dbe2d5c75ecc12347b1db55788c453fe3fe))
+* 🎸 add colorSchemeNoPreference$ ([b2cca5c](https://github.com/streamich/rx-use/commit/b2cca5c1dd2bd8aef8f63e06ce750d241f497c57))
+* 🎸 add darkTheme$ ([a605077](https://github.com/streamich/rx-use/commit/a605077316f7e04974b4376b34682d64728fb6e9))
+* 🎸 use ReadonlyBehaviorSubject as export type ([ddeaf01](https://github.com/streamich/rx-use/commit/ddeaf0127d61ca076edb40c5159d7d88cb1737dd))
+
 # [1.3.0](https://github.com/streamich/rx-use/compare/v1.2.0...v1.3.0) (2020-05-16)
 
 
