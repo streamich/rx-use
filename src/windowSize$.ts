@@ -1,6 +1,7 @@
 import {window} from './window';
 import {BehaviorSubject, fromEvent} from 'rxjs';
 import {share, map, filter} from 'rxjs/operators';
+import { ReadonlyBehaviorSubject } from './types';
 
 export type SizeWindow = Pick<Window, 'addEventListener' | 'removeEventListener' | 'innerHeight' | 'innerWidth'>;
 
@@ -35,4 +36,4 @@ const createBrowserWindowSize$ = () => {
   return windowSize$;
 };
 
-export const windowSize$: BehaviorSubject<WindowSizeState> = createBrowserWindowSize$();
+export const windowSize$: ReadonlyBehaviorSubject<WindowSizeState> = createBrowserWindowSize$();
