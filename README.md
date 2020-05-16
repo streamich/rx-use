@@ -11,6 +11,7 @@ Sensor and side-effect library for [`rxjs`](https://rxjs-dev.firebaseapp.com/).
   - [`onLine$`](./docs/onLine$.md) &mdash; `boolean` whether user is on-line.
   - [`connection$`](./docs/connection$.md) &mdash; information about user's network connection.
 - [`windowSize$`](./docs/windowSize$.md) and [`windowSizeRaf$`](./docs/windowSizeRaf$.md) &mdash; browser window dimension sensor.
+- [`darkTheme$()`](./docs/darkTheme$.md) &mdash; emits `true` if UI should use dark theme.
 - [`matchMedia$()`](./docs/matchMedia$.md) &mdash; returns boolean indicating media query match.
   - [`colorSchemeDark$()`](./docs/colorSchemeDark$.md) &mdash; whether user selected dark theme in system settings.
   - [`colorSchemeLight$()`](./docs/colorSchemeLight$.md) &mdash; whether user selected light theme in system settings.
