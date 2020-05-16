@@ -1,3 +1,11 @@
+# [1.3.0](https://github.com/streamich/rx-use/compare/v1.2.0...v1.3.0) (2020-05-16)
+
+
+### Features
+
+* 🎸 add matchMedia$ observable ([939898c](https://github.com/streamich/rx-use/commit/939898c6c5da3cef3675f89901491e37dbaa664b))
+* 🎸 improve matchMedia$ observable ([021f1aa](https://github.com/streamich/rx-use/commit/021f1aa3a0c6e471a7966607a86439a306995524))
+
 # [1.2.0](https://github.com/streamich/rx-use/compare/v1.1.0...v1.2.0) (2020-05-03)
 
 
