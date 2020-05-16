@@ -1,6 +1,6 @@
 # `network$`
 
-`BehaviorSubject` that tracks user's network connection status. Is stubbed to also work on sever.
+`ReadonlyBehaviorSubject` that tracks user's network connection status. Is stubbed to also work on sever.
 
 ```ts
 import { network$ } from 'rx-use/lib/network$';

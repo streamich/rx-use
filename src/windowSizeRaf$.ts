@@ -1,7 +1,8 @@
 import {BehaviorSubject} from 'rxjs';
-import {windowSize$} from './windowSize$';
+import {windowSize$, WindowSizeState} from './windowSize$';
 import {raf} from './raf';
+import { ReadonlyBehaviorSubject } from './types';
 
-export const windowSizeRaf$ = new BehaviorSubject(windowSize$.getValue());
+export const windowSizeRaf$: ReadonlyBehaviorSubject<WindowSizeState> = new BehaviorSubject(windowSize$.getValue());
 
-windowSize$.pipe(raf()).subscribe(windowSizeRaf$);
+windowSize$.pipe(raf()).subscribe(windowSizeRaf$ as BehaviorSubject<WindowSizeState>);
