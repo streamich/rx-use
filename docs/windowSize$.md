@@ -4,7 +4,7 @@
 Is stubbed to also work on sever.
 
 ```ts
-import { windowSize$ } from 'rx-use';
+import { windowSize$ } from 'rx-use/lib/windowSize$';
 
 windowSize$.subscribe(({ width, height }) => {
   console.log(width, height); // 1024, 768
