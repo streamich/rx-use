@@ -1,6 +1,6 @@
 # `pathname$`
 
-`BehaviorSubject` that tracks emits on changes in `pathname` property of
+`ReadonlyBehaviorSubject` that tracks emits on changes in `pathname` property of
 `window.location`. Is stubbed to also work on sever.
 
 ```ts

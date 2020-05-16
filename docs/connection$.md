@@ -1,6 +1,6 @@
 # `connection$`
 
-`BehaviorSubject` that changes in `window.navigator.connection` object.
+`ReadonlyBehaviorSubject` that changes in `window.navigator.connection` object.
 Is stubbed to also work on sever.
 
 ```ts

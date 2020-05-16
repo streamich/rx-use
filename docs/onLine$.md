@@ -1,6 +1,6 @@
 # `onLine$`
 
-`BehaviorSubject` which tracks the latest value of `window.onLine` property, boolean.
+`ReadonlyBehaviorSubject` which tracks the latest value of `window.onLine` property, boolean.
 Is stubbed to also work on sever.
 
 ```ts
