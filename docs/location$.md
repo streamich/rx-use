@@ -4,7 +4,7 @@
 and `window.history` properties. Is stubbed to also work on sever.
 
 ```ts
-import { location$ } from 'rx-use';
+import { location$ } from 'rx-use/lib/location$';
 
 location$.subscribe(({ protocol }) => {
   console.log(protocol); // https:
