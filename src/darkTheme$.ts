@@ -1,5 +1,5 @@
-import {merge, BehaviorSubject, Observable} from 'rxjs';
-import {filter, map} from 'rxjs/operators';
+import {BehaviorSubject} from 'rxjs';
+import {filter, map, tap} from 'rxjs/operators';
 import {colorSchemeNoPreference$} from './colorSchemeNoPreference$';
 import {colorSchemeDark$} from './colorSchemeDark$';
 import {colorSchemeLight$} from './colorSchemeLight$';
@@ -12,25 +12,21 @@ const defaultIsNightTime = (): boolean => {
 };
 
 export const createDarkTheme$ = (isNightTime: () => boolean = defaultIsNightTime): ReadonlyBehaviorSubject<boolean> => {
-  const observable: Observable<boolean> = merge(
-    colorSchemeNoPreference$.pipe(
-      filter(Boolean),
-      map(() => isNightTime())
-    ),
-    colorSchemeDark$.pipe(
-      filter<boolean>(Boolean)
-    ),
-    colorSchemeLight$.pipe(
-      filter(Boolean),
-      map(() => false)
-    ),
-  );
+  const subject = new BehaviorSubject<boolean>(false);
 
-  let value: boolean = false;
-  observable.subscribe(v => value = v).unsubscribe();
+  colorSchemeNoPreference$.pipe(
+    filter(Boolean),
+    map(() => isNightTime()),
+  ).subscribe(subject);
 
-  const subject = new BehaviorSubject<boolean>(value);
-  observable.subscribe(subject);
+  colorSchemeDark$.pipe(
+    filter<boolean>(Boolean),
+  ).subscribe(subject);
+
+  colorSchemeLight$.pipe(
+    filter(isLight => !isLight),
+    map(() => false),
+  ).subscribe(subject);
 
   return subject;
 };

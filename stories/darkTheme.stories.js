@@ -1,15 +1,14 @@
-import {colorSchemeDark$} from '../src/colorSchemeDark$';
+import {darkTheme$} from '../src/darkTheme$';
 
 export default {
-  title: 'colorSchemeDark$',
+  title: 'darkTheme$',
 };
 
 export const Default = () => {
   const btn = document.createElement('button');
   btn.type = 'button';
   btn.innerText = 'Hello Button';
-  colorSchemeDark$.subscribe(value => {
-    console.log('value', value);
+  darkTheme$.subscribe(value => {
     btn.innerText = value ? 'TRUE' : 'FALSE';
 
   });
