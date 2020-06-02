@@ -1,4 +1,4 @@
 import {matchMedia$} from './matchMedia$';
-import {share} from 'rxjs/operators';
+import {shareReplay} from 'rxjs/operators';
 
-export const colorSchemeDark$ = matchMedia$('(prefers-color-scheme: dark)').pipe(share());
+export const colorSchemeDark$ = matchMedia$('(prefers-color-scheme: dark)').pipe(shareReplay(1));

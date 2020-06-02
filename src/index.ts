@@ -11,3 +11,4 @@ export * from './pathname$';
 export * from './raf';
 export * from './windowSize$';
 export * from './windowSizeRaf$';
+export * from './types';
