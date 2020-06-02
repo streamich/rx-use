@@ -30,7 +30,9 @@
     "build:es": "tsc -m esNext --target es6 --outDir esm",
     "build": "yarn build:cjs && yarn build:es",
     "test": "jest --no-cache --config='jest.config.js'",
-    "release": "semantic-release"
+    "release": "semantic-release",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "keywords": [],
   "dependencies": {},
@@ -38,12 +40,15 @@
     "rxjs": "*"
   },
   "devDependencies": {
+    "@babel/core": "^7.10.2",
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
     "@semantic-release/changelog": "^5.0.1",
     "@semantic-release/git": "^9.0.0",
     "@semantic-release/npm": "^7.0.5",
+    "@storybook/html": "^5.3.19",
     "@types/jest": "^25.2.1",
+    "babel-loader": "^8.1.0",
     "husky": "^4.2.5",
     "jest": "^25.5.3",
     "prettier": "^2.0.5",
