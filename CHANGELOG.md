@@ -1,3 +1,16 @@
+# [1.5.0](https://github.com/streamich/rx-use/compare/v1.4.0...v1.5.0) (2020-06-02)
+
+
+### Bug Fixes
+
+* 🐛 correctly emit darkTheme$ values ([c9a0166](https://github.com/streamich/rx-use/commit/c9a0166e304dc2b3bb5226a2c05df47843a08f45))
+* 🐛 make match media observables behave like behavior subjec ([71a5d0c](https://github.com/streamich/rx-use/commit/71a5d0c0bad822409df4965507606e5819b6e28b))
+
+
+### Features
+
+* 🎸 export types ([b341dea](https://github.com/streamich/rx-use/commit/b341dea213050857b9e482b182f6e8e258ae4be3))
+
 # [1.4.0](https://github.com/streamich/rx-use/compare/v1.3.0...v1.4.0) (2020-05-16)
 
 
