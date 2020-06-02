@@ -11,6 +11,7 @@ const matchMediaClient$ = (query: string): ReadonlyBehaviorSubject<boolean> => {
       observer.next(last = mql.matches);
     };
     mql.addListener(listener);
+    observer.next(last === mql.matches);
     return () => mql.removeListener(listener);
   });
   observable.getValue = () => mql.matches;

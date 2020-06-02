@@ -35,11 +35,6 @@ jest.mock('../window', () => {
   };
 });
 
-beforeEach(() => {
-  _addListener.splice(0);
-  _removeListener.splice(0);
-});
-
 test('can subscribe and unsubscribe', () => {
   colorSchemeLight$.subscribe(() => {}).unsubscribe();
 });
@@ -62,13 +57,13 @@ test('can have multiple subscribers', () => {
   _mql[0].matches = true;
   _addListener[0]();
 
-  expect(spy1).toHaveBeenCalledTimes(3);
-  expect(spy1.mock.calls[0][0]).toBe(true);
-  expect(spy1.mock.calls[1][0]).toBe(false);
-  expect(spy1.mock.calls[2][0]).toBe(true);
+  expect(spy1).toHaveBeenCalledTimes(4);
+  expect(spy1.mock.calls[1][0]).toBe(true);
+  expect(spy1.mock.calls[2][0]).toBe(false);
+  expect(spy1.mock.calls[3][0]).toBe(true);
 
-  expect(spy2).toHaveBeenCalledTimes(3);
-  expect(spy2.mock.calls[0][0]).toBe(true);
-  expect(spy2.mock.calls[1][0]).toBe(false);
-  expect(spy2.mock.calls[2][0]).toBe(true);
+  expect(spy2).toHaveBeenCalledTimes(4);
+  expect(spy2.mock.calls[1][0]).toBe(true);
+  expect(spy2.mock.calls[2][0]).toBe(false);
+  expect(spy2.mock.calls[3][0]).toBe(true);
 });
