@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/streamich/rx-use/compare/v1.5.0...v1.5.1) (2020-06-03)
+
+
+### Bug Fixes
+
+* 🐛 correctly set initial value in matchMedia$ ([c173deb](https://github.com/streamich/rx-use/commit/c173debd68f011fb2d61f11ac93e146a5a0a70a2))
+
 # [1.5.0](https://github.com/streamich/rx-use/compare/v1.4.0...v1.5.0) (2020-06-02)
 
 
