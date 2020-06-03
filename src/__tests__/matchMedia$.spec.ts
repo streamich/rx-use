@@ -83,7 +83,7 @@ test('subscribes and unsubscribes to media query listeners', () => {
   _addListener[0]();
   
   expect(spy).toHaveBeenCalledTimes(4);
-  expect(spy.mock.calls[0][0]).toBe(true);
+  expect(spy.mock.calls[0][0]).toBe(false);
   expect(spy.mock.calls[1][0]).toBe(true);
   expect(spy.mock.calls[2][0]).toBe(false);
   expect(spy.mock.calls[3][0]).toBe(true);
@@ -106,13 +106,13 @@ test('can have two subscribers', () => {
   _addListener[0]();
   
   expect(spy1).toHaveBeenCalledTimes(4);
-  expect(spy1.mock.calls[0][0]).toBe(true);
+  expect(spy1.mock.calls[0][0]).toBe(false);
   expect(spy1.mock.calls[1][0]).toBe(true);
   expect(spy1.mock.calls[2][0]).toBe(false);
   expect(spy1.mock.calls[3][0]).toBe(true);
   
   expect(spy2).toHaveBeenCalledTimes(4);
-  expect(spy2.mock.calls[0][0]).toBe(true);
+  expect(spy2.mock.calls[0][0]).toBe(false);
   expect(spy2.mock.calls[1][0]).toBe(true);
   expect(spy2.mock.calls[2][0]).toBe(false);
   expect(spy2.mock.calls[3][0]).toBe(true);
@@ -140,7 +140,7 @@ test('does not emit the same value', () => {
   _addListener[0]();
   
   expect(spy).toHaveBeenCalledTimes(4);
-  expect(spy.mock.calls[0][0]).toBe(true);
+  expect(spy.mock.calls[0][0]).toBe(false);
   expect(spy.mock.calls[1][0]).toBe(true);
   expect(spy.mock.calls[2][0]).toBe(false);
   expect(spy.mock.calls[3][0]).toBe(true);

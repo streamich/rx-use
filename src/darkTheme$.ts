@@ -1,5 +1,4 @@
 import {BehaviorSubject} from 'rxjs';
-import {filter, map, tap} from 'rxjs/operators';
 import {colorSchemeNoPreference$} from './colorSchemeNoPreference$';
 import {colorSchemeDark$} from './colorSchemeDark$';
 import {colorSchemeLight$} from './colorSchemeLight$';
@@ -14,19 +13,17 @@ const defaultIsNightTime = (): boolean => {
 export const createDarkTheme$ = (isNightTime: () => boolean = defaultIsNightTime): ReadonlyBehaviorSubject<boolean> => {
   const subject = new BehaviorSubject<boolean>(false);
 
-  colorSchemeNoPreference$.pipe(
-    filter(Boolean),
-    map(() => isNightTime()),
-  ).subscribe(subject);
+  colorSchemeNoPreference$.subscribe(noPreference => {
+    if (noPreference) subject.next(isNightTime());
+  });
 
-  colorSchemeDark$.pipe(
-    filter<boolean>(Boolean),
-  ).subscribe(subject);
+  colorSchemeDark$.subscribe(isDark => {
+    if (isDark && !subject.getValue()) subject.next(true);
+  });
 
-  colorSchemeLight$.pipe(
-    filter(isLight => !isLight),
-    map(() => false),
-  ).subscribe(subject);
+  colorSchemeLight$.subscribe(isLight => {
+    if (isLight && subject.getValue()) subject.next(false);
+  });
 
   return subject;
 };
