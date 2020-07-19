@@ -12,3 +12,6 @@ export * from './raf';
 export * from './windowSize$';
 export * from './windowSizeRaf$';
 export * from './types';
+export * from './stdin$';
+export * from './fromStream';
+export * from './ansiKeys$';
