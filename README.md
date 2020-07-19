@@ -16,6 +16,8 @@ Sensor and side-effect library for [`rxjs`](https://rxjs-dev.firebaseapp.com/). 
   - [`colorSchemeDark$`](./docs/colorSchemeDark$.md) &mdash; whether user selected dark theme in system settings.
   - [`colorSchemeLight$`](./docs/colorSchemeLight$.md) &mdash; whether user selected light theme in system settings.
   - [`colorSchemeNoPreference$`](./docs/colorSchemeNoPreference$.md) &mdash; whether user has no preference for color scheme.
+- `stdin$` &mdash; listen for data coming from STDIN.
+- `ansiKeys$` &mdash; listen for ANSI terminal key presses.
 
 
 ## Operators
@@ -24,6 +26,8 @@ Sensor and side-effect library for [`rxjs`](https://rxjs-dev.firebaseapp.com/). 
 
 
 ## Other
+
+- `fromStream()` &mdash; constructs observable from Node.js readable stream.
 
 Most observables imported from this library have `ReadonlyBehaviorSubject` type.
 Which is an `Observable` with an extra `.getValue()` to access the current value of the observable.

@@ -1,4 +1,3 @@
-import { fromStream } from './fromStream';
 import { parseAnsiKeyCodes, KeyboardEvent } from './util/parseAnsiKeyCodes';
 import { map, mergeMap, share } from 'rxjs/operators';
 import { from, Observable } from 'rxjs';
