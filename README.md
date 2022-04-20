@@ -18,6 +18,7 @@ Sensor and side-effect library for [`rxjs`](https://rxjs-dev.firebaseapp.com/). 
   - [`colorSchemeNoPreference$`](./docs/colorSchemeNoPreference$.md) &mdash; whether user has no preference for color scheme.
 - `stdin$` &mdash; listen for data coming from STDIN.
 - `ansiKeys$` &mdash; listen for ANSI terminal key presses.
+- `pubsub` &mdash; publish/subscribe mechanism for inter-tab communication in browser.
 
 
 ## Operators
