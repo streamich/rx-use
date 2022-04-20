@@ -1,5 +1,5 @@
 import {filter, map} from "rxjs/operators";
-import {Subject} from "rxjs/internal/Subject";
+import {Subject} from "rxjs";
 import type {Observable} from "rxjs";
 import type {PubSub, TopicPredicate} from "./types";
 
