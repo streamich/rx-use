@@ -8,4 +8,5 @@ module.exports = {
   },
   transformIgnorePatterns: [],
   testRegex: '.*\.(test|spec)\.(jsx?|tsx?)$',
+  testEnvironment: 'jsdom',
 };
