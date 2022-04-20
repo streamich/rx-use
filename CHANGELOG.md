@@ -1,3 +1,13 @@
+# [1.7.0](https://github.com/streamich/rx-use/compare/v1.6.0...v1.7.0) (2022-04-20)
+
+
+### Features
+
+* 🎸 add el() helper ([e6fae4c](https://github.com/streamich/rx-use/commit/e6fae4c412e59c5ebc5c7b0b82cf9468fc13f2aa))
+* 🎸 add PubSub implementation on top of BroadcastChannel ([561d542](https://github.com/streamich/rx-use/commit/561d54261952a6fd53c4b80e5475d4230988c0ab))
+* 🎸 allow dynamic children in el() ([4ed8c5e](https://github.com/streamich/rx-use/commit/4ed8c5e999ac94b8e924a4709f22c51541df7d84))
+* 🎸 improve pubsub implementation ([0df54f9](https://github.com/streamich/rx-use/commit/0df54f97866ef6b5e21dd8194c6c848de4ee8ff5))
+
 # [1.6.0](https://github.com/streamich/rx-use/compare/v1.5.1...v1.6.0) (2020-07-19)
 
 

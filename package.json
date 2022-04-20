@@ -1,6 +1,6 @@
 {
   "name": "rx-use",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "",
   "author": {
     "name": "streamich",
@@ -36,8 +36,7 @@
     "build-storybook": "build-storybook"
   },
   "keywords": [],
-  "dependencies": {
-  },
+  "dependencies": {},
   "peerDependencies": {
     "rxjs": "^7"
   },
