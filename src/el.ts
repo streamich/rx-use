@@ -1,4 +1,4 @@
-import {Observable, Observer} from "rxjs";
+import {isObservable, Observable, Observer, of} from "rxjs";
 
 export type HtmlEventHandler<K extends keyof HTMLElementEventMap> = (this: HTMLObjectElement, ev: HTMLElementEventMap[K]) => any;
 
@@ -31,29 +31,32 @@ export class RxHtmlElement<K extends keyof HTMLElementTagNameMap> {
   }
 }
 
-const appendChildren = (el: RxHtmlElement<any>, children?: RxHtmlElementChild[]) => {
+const appendChildren = (el: RxHtmlElement<any>, children?: RxHtmlElementChild[] | Observable<RxHtmlElementChild[]>) => {
   if (!children) return;
-  for (const child of children) {
-    switch (typeof child) {
-      case "string":
-      case "number": {
-        const text = document.createTextNode(String(child));
-        el.el.appendChild(text);
-        break;
-      }
-      case "object": {
-        if (child instanceof RxHtmlElement) {
-          el.el.appendChild(child.el);
-        } else if (child instanceof Array) {
-          appendChildren(el, child);
+  (isObservable(children) ? children : of(children)).subscribe((children) => {
+    el.el.innerHTML = '';
+    for (const child of children) {
+      switch (typeof child) {
+        case "string":
+        case "number": {
+          const text = document.createTextNode(String(child));
+          el.el.appendChild(text);
+          break;
         }
-        break;
+        case "object": {
+          if (child instanceof RxHtmlElement) {
+            el.el.appendChild(child.el);
+          } else if (child instanceof Array) {
+            appendChildren(el, child);
+          }
+          break;
+        }
       }
     }
-  }
+  });
 };
 
-export const el = <K extends keyof HTMLElementTagNameMap>(tag: K, attributes: RxHtmlElementAttributes, children?: RxHtmlElement<K>[]) => {
+export const el = <K extends keyof HTMLElementTagNameMap>(tag: K, attributes: RxHtmlElementAttributes, children?: RxHtmlElementChild[] | Observable<RxHtmlElementChild[]>) => {
   const el = new RxHtmlElement<K>(tag);
   for (const [key, value] of Object.entries(attributes)) {
     if (key === 'on') continue;
