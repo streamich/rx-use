@@ -52,7 +52,7 @@ const buildState = (event: LocationStateEvent, location: LocationFields, history
 
 const createBrowserLocation$ = (): BehaviorSubject<LocationState> => {
   const location$ = new BehaviorSubject(buildState('load', window!.location, window!.history));
-  merge<LocationStateEvent>(
+  merge(
     fromEvent(window!, 'popstate').pipe(map(() => 'pop')) as Observable<LocationStateEvent>,
     fromEvent(window!, 'rx-pushstate').pipe(map(() => 'push')) as Observable<LocationStateEvent>,
     fromEvent(window!, 'rx-replacestate').pipe(map(() => 'replace')) as Observable<LocationStateEvent>,

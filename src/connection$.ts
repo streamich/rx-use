@@ -13,7 +13,7 @@ export interface ConnectionState {
 
 export interface Connection extends ConnectionState, EventSource {}
 
-export interface NavigatorWithConnection extends Navigator {
+export type NavigatorWithConnection = Navigator & {
   connection?: Connection;
   mozConnection?: Connection;
   webkitConnection?: Connection;
