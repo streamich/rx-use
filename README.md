@@ -19,6 +19,7 @@ Sensor and side-effect library for [`rxjs`](https://rxjs-dev.firebaseapp.com/). 
 - `stdin$` &mdash; listen for data coming from STDIN.
 - `ansiKeys$` &mdash; listen for ANSI terminal key presses.
 - `pubsub` &mdash; publish/subscribe mechanism for inter-tab communication in browser.
+- [`tablist`](./src/tablist/README.md) &mdash; keeps track of all same origin tabs, elects leader and allows to send messages to all tabs or create private channels between any two tabs.
 
 
 ## Operators
