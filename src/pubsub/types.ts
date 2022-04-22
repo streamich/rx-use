@@ -11,4 +11,5 @@ export interface PubSub {
   pub: <Data = unknown>(topic: string | number, data: Data) => void;
   sub$: <Data = unknown>(topicPredicate: TopicPredicate<Data>) => Observable<Data>;
   end: () => void;
+  end$: Observable<void>;
 }

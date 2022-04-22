@@ -3,7 +3,7 @@ import {Subject} from "rxjs";
 import type {Observable} from "rxjs";
 import type {PubSub, TopicPredicate} from "./types";
 
-type Message = [topic: string | number, data: unknown, clock?: number];
+export type Message = [topic: string | number, data: unknown, clock?: number];
 
 export abstract class PubSubA implements Pick<PubSub, 'sub$'> {
   protected readonly bus$ = new Subject<Message>();
@@ -17,6 +17,14 @@ export abstract class PubSubA implements Pick<PubSub, 'sub$'> {
       map(([topic, data]) => data),
     ) as Observable<Data>;
   }
+
+  public readonly end$ = new Subject<void>();
+
+  public end(): void {
+    this.bus$.complete();
+    this.end$.next();
+    this.end$.complete();
+  };
 }
 
 export class PubSubBC extends PubSubA implements PubSub {
@@ -35,6 +43,7 @@ export class PubSubBC extends PubSubA implements PubSub {
   };
 
   public readonly end = () => {
+    super.end();
     this.ch.close();
   };
 }
@@ -62,6 +71,7 @@ export class PubSubLS extends PubSubA implements PubSub {
   };
 
   public readonly end = () => {
+    super.end();
     window.removeEventListener('storage', this.listener);
   };
 }
@@ -71,8 +81,6 @@ export class PubSubM extends PubSubA implements PubSub {
     const msg: Message = [topic, data];
     this.bus$.next(msg);
   };
-
-  public readonly end = () => {};
 }
 
 const hasBC = typeof BroadcastChannel !== 'undefined';
