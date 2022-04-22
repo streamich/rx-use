@@ -1,6 +1,6 @@
-import {BehaviorSubject, Observable, timer, firstValueFrom, take, Subject, filter, switchMap, of, from} from "rxjs";
-import {PubSubA, Message} from "../pubsub";
-import type {PubSub} from "../pubsub/types";
+import {BehaviorSubject, Observable, timer, firstValueFrom, take, Subject, filter, switchMap, of, from} from 'rxjs';
+import {PubSubA, Message} from '../pubsub';
+import type {PubSub} from '../pubsub/types';
 
 const enum MSG {
   /** New tab asks for peer list. */
@@ -39,7 +39,7 @@ export interface TabListDependencies {
 
 export class TabList {
   /** Unique ID of the current browser tab instance. Zero is not allowed. */
-  public readonly id: number = (Date.now() * 0x100) + Math.floor(Math.random() * 256);
+  public readonly id: number = Date.now() * 0x100 + Math.floor(Math.random() * 256);
   /** ID of the leader tab. If equal to `.id`, then current tab is the leader. */
   public readonly leader$ = new BehaviorSubject<number>(0);
   /** List of known peers. Where key is peer ID and value is last heartbeat time. */
@@ -98,7 +98,7 @@ export class TabList {
     Object.assign(this.peers, peers);
     for (const [key, time] of Object.entries(this.peers)) {
       const id = Number(key);
-      if ((time + this.pingTimeout < now) || (id === this.id)) delete this.peers[id];
+      if (time + this.pingTimeout < now || id === this.id) delete this.peers[id];
       if (leader > id) leader = id;
     }
     if (leader !== this.leader$.getValue()) this.leader$.next(leader);
@@ -116,9 +116,10 @@ export class TabList {
       const self = this;
       const channel = this.deps.newBus(callNumber);
       let endReceived = false;
-      const call = new class Call extends PubSubA {
+      const call = new (class Call extends PubSubA {
         protected readonly s = channel.sub$<Message>(MSG.CALL_MSG).subscribe(this.bus$);
-        public readonly pub = <Data = unknown>(topic: string | number, data: Data): void => channel.pub(MSG.CALL_MSG, [topic, data]);
+        public readonly pub = <Data = unknown>(topic: string | number, data: Data): void =>
+          channel.pub(MSG.CALL_MSG, [topic, data]);
         public readonly end = () => {
           channel.pub(endReceived ? MSG.CALL_END_ACK : MSG.CALL_END, 0);
           super.end();
@@ -126,11 +127,14 @@ export class TabList {
           channel.end();
           delete self.calls[callNumber];
         };
-      };
-      channel.sub$<number>(MSG.CALL_END).pipe(take(1)).subscribe(() => {
-        endReceived = true;
-        call.end();
-      });
+      })();
+      channel
+        .sub$<number>(MSG.CALL_END)
+        .pipe(take(1))
+        .subscribe(() => {
+          endReceived = true;
+          call.end();
+        });
       this.calls[callNumber] = call;
     }
     return this.calls[callNumber];
@@ -141,26 +145,29 @@ export class TabList {
     const callNumber = this.getCallNumber(this.id, tabId);
     const call = this.calls[callNumber];
     if (call) return of(call);
-    return from((async () => {
-      const call = this.startCall(this.id, tabId);
-      const ack = firstValueFrom(call.sub$<number>(MSG.CALL_ACK));
-      this.deps.bus.pub<CallMessage>(MSG.CALL, [this.id, tabId]);
-      let timer; const timeout = new Promise((resolve, reject) => {
-        timer = setTimeout(() => {
-          call.end();
-          reject(new Error('TIMEOUT'));
-        }, 1000);
-      });
-      await Promise.race([ack, timeout]);
-      clearTimeout(timer);
-      return call;
-    })());
-  };
+    return from(
+      (async () => {
+        const call = this.startCall(this.id, tabId);
+        const ack = firstValueFrom(call.sub$<number>(MSG.CALL_ACK));
+        this.deps.bus.pub<CallMessage>(MSG.CALL, [this.id, tabId]);
+        let timer;
+        const timeout = new Promise((resolve, reject) => {
+          timer = setTimeout(() => {
+            call.end();
+            reject(new Error('TIMEOUT'));
+          }, 1000);
+        });
+        await Promise.race([ack, timeout]);
+        clearTimeout(timer);
+        return call;
+      })(),
+    );
+  }
 
   public callLeader$(): Observable<PubSub> {
     return this.leader$.pipe(
-      filter(id => !!id),
-      switchMap(id => this.call$(id)),
+      filter((id) => !!id),
+      switchMap((id) => this.call$(id)),
     );
   }
 }

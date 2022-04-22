@@ -20,7 +20,15 @@ export class KeyboardEvent {
   metaKey: boolean;
   shiftKey: boolean;
 
-  constructor(raw: string, key: string, code: string, altKey = false, ctrlKey = false, metaKey = false, shiftKey = false) {
+  constructor(
+    raw: string,
+    key: string,
+    code: string,
+    altKey = false,
+    ctrlKey = false,
+    metaKey = false,
+    shiftKey = false,
+  ) {
     this.raw = raw;
     this.key = key;
     this.code = code;
@@ -31,7 +39,7 @@ export class KeyboardEvent {
   }
 }
 
-const commonSpecialChars: Record<number, {key: string, code: string, shiftKey?: boolean}> = {
+const commonSpecialChars: Record<number, {key: string; code: string; shiftKey?: boolean}> = {
   41: {key: ')', code: 'Digit0', shiftKey: true},
   33: {key: '!', code: 'Digit1', shiftKey: true},
   64: {key: '@', code: 'Digit2', shiftKey: true},
@@ -75,16 +83,20 @@ const commonSpecialChars: Record<number, {key: string, code: string, shiftKey?: 
 const parseOneChar = (code: number): null | Key => {
   const char = commonSpecialChars[code];
   if (char) return char;
-  else if ((code >= 97) && (code <= 122)) { // a..z
+  else if (code >= 97 && code <= 122) {
+    // a..z
     const key = String.fromCharCode(code);
     return {key, code: 'Key' + key.toUpperCase()};
-  } else if ((code >= 65) && (code <= 90)) { // A..Z
+  } else if (code >= 65 && code <= 90) {
+    // A..Z
     const key = String.fromCharCode(code);
     return {key, code: 'Key' + key, shiftKey: true};
-  } else if ((code >= 1) && (code <= 26)) { // Ctrl + a..z
+  } else if (code >= 1 && code <= 26) {
+    // Ctrl + a..z
     const key = String.fromCharCode(code + 97 - 1);
     return {key, code: 'Digit' + key, ctrlKey: true};
-  } else if ((code >= 48) && (code <= 57)) { // 0..9
+  } else if (code >= 48 && code <= 57) {
+    // 0..9
     const key = String(code - 48);
     return {key, code: 'Digit' + key};
   } else return null;
@@ -122,29 +134,49 @@ export const parseAnsiKeyCodes = (data: Uint8Array) => {
     const code = data[i];
 
     const arrow = parseArrows(code, data[i + 1], data[i + 2]);
-    if (arrow) { eat(3, arrow); continue; }
+    if (arrow) {
+      eat(3, arrow);
+      continue;
+    }
 
     const char = parseOneChar(code);
-    if (!char) { skip(1); continue; }
+    if (!char) {
+      skip(1);
+      continue;
+    }
 
     if (char.key === 'Escape') {
       const code1 = data[i + 1];
 
       const arrow = parseArrows(data[i + 1], data[i + 2], data[i + 3]);
-      if (arrow) { eat(4, {...arrow, altKey: true}); continue; }
+      if (arrow) {
+        eat(4, {...arrow, altKey: true});
+        continue;
+      }
 
-      if ((code1 === 0x4f) && (data[i + 2] === 0x50)) { eat(3, {key: 'F1', code: 'F1'}); continue; }
-      else if ((code1 === 0x4f) && (data[i + 2] === 0x51)) { eat(3, {key: 'F2', code: 'F2'}); continue; }
-      else if ((code1 === 0x4f) && (data[i + 2] === 0x52)) { eat(3, {key: 'F3', code: 'F3'}); continue; }
-      else if ((code1 === 0x4f) && (data[i + 2] === 0x53)) { eat(3, {key: 'F4', code: 'F4'}); continue; }
+      if (code1 === 0x4f && data[i + 2] === 0x50) {
+        eat(3, {key: 'F1', code: 'F1'});
+        continue;
+      } else if (code1 === 0x4f && data[i + 2] === 0x51) {
+        eat(3, {key: 'F2', code: 'F2'});
+        continue;
+      } else if (code1 === 0x4f && data[i + 2] === 0x52) {
+        eat(3, {key: 'F3', code: 'F3'});
+        continue;
+      } else if (code1 === 0x4f && data[i + 2] === 0x53) {
+        eat(3, {key: 'F4', code: 'F4'});
+        continue;
+      }
 
       const char1 = parseOneChar(code1);
-      if (!char1) { eat(1, char); continue; }
-      else eat(2, {...char1, altKey: true});
+      if (!char1) {
+        eat(1, char);
+        continue;
+      } else eat(2, {...char1, altKey: true});
     }
 
     eat(1, char);
   }
 
-  return { tokens };
+  return {tokens};
 };

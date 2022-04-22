@@ -1,7 +1,7 @@
 import {window} from './window';
 import {BehaviorSubject, fromEvent} from 'rxjs';
 import {map} from 'rxjs/operators';
-import { ReadonlyBehaviorSubject } from './types';
+import {ReadonlyBehaviorSubject} from './types';
 
 export interface ConnectionState {
   downlink?: number;
@@ -17,7 +17,7 @@ export type NavigatorWithConnection = Navigator & {
   connection?: Connection;
   mozConnection?: Connection;
   webkitConnection?: Connection;
-}
+};
 
 const navigator: NavigatorWithConnection | undefined =
   (window && (window.navigator as NavigatorWithConnection)) || undefined;
@@ -41,5 +41,7 @@ const state = (): ConnectionState => {
 export const connection$: ReadonlyBehaviorSubject<ConnectionState> = new BehaviorSubject(state());
 
 if (!!connection) {
-  fromEvent(connection, 'change').pipe(map(state)).subscribe(connection$ as BehaviorSubject<ConnectionState>);
+  fromEvent(connection, 'change')
+    .pipe(map(state))
+    .subscribe(connection$ as BehaviorSubject<ConnectionState>);
 }

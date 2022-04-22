@@ -13,15 +13,15 @@ const defaultIsNightTime = (): boolean => {
 export const createDarkTheme$ = (isNightTime: () => boolean = defaultIsNightTime): ReadonlyBehaviorSubject<boolean> => {
   const subject = new BehaviorSubject<boolean>(false);
 
-  colorSchemeNoPreference$.subscribe(noPreference => {
+  colorSchemeNoPreference$.subscribe((noPreference) => {
     if (noPreference) subject.next(isNightTime());
   });
 
-  colorSchemeDark$.subscribe(isDark => {
+  colorSchemeDark$.subscribe((isDark) => {
     if (isDark && !subject.getValue()) subject.next(true);
   });
 
-  colorSchemeLight$.subscribe(isLight => {
+  colorSchemeLight$.subscribe((isLight) => {
     if (isLight && subject.getValue()) subject.next(false);
   });
 

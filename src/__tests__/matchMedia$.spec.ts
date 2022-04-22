@@ -5,8 +5,8 @@ const {window, _query, _addListener, _removeListener, _mql} = require('../window
 jest.mock('../window', () => {
   const _query: string[] = [];
   const _addListener: any[] = [];
-  const _removeListener: any[] =  []
-  const _mql: any[] =  []
+  const _removeListener: any[] = [];
+  const _mql: any[] = [];
   const wnd: Window = {
     matchMedia: (query) => {
       _query.push(query);
@@ -44,7 +44,9 @@ beforeEach(() => {
 });
 
 test('can subscribe and unsubscribe', () => {
-  matchMedia$('test').subscribe(() => {}).unsubscribe();
+  matchMedia$('test')
+    .subscribe(() => {})
+    .unsubscribe();
 });
 
 test('subscribes to the right query', () => {
@@ -81,7 +83,7 @@ test('subscribes and unsubscribes to media query listeners', () => {
 
   _mql[0].matches = true;
   _addListener[0]();
-  
+
   expect(spy).toHaveBeenCalledTimes(4);
   expect(spy.mock.calls[0][0]).toBe(false);
   expect(spy.mock.calls[1][0]).toBe(true);
@@ -104,13 +106,13 @@ test('can have two subscribers', () => {
 
   _mql[0].matches = true;
   _addListener[0]();
-  
+
   expect(spy1).toHaveBeenCalledTimes(4);
   expect(spy1.mock.calls[0][0]).toBe(false);
   expect(spy1.mock.calls[1][0]).toBe(true);
   expect(spy1.mock.calls[2][0]).toBe(false);
   expect(spy1.mock.calls[3][0]).toBe(true);
-  
+
   expect(spy2).toHaveBeenCalledTimes(4);
   expect(spy2.mock.calls[0][0]).toBe(false);
   expect(spy2.mock.calls[1][0]).toBe(true);
@@ -135,10 +137,10 @@ test('does not emit the same value', () => {
   _addListener[0]();
   _mql[0].matches = false;
   _addListener[0]();
-  
+
   _mql[0].matches = true;
   _addListener[0]();
-  
+
   expect(spy).toHaveBeenCalledTimes(4);
   expect(spy.mock.calls[0][0]).toBe(false);
   expect(spy.mock.calls[1][0]).toBe(true);

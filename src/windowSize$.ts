@@ -1,7 +1,7 @@
 import {window} from './window';
 import {BehaviorSubject, fromEvent} from 'rxjs';
 import {share, map, filter} from 'rxjs/operators';
-import { ReadonlyBehaviorSubject } from './types';
+import {ReadonlyBehaviorSubject} from './types';
 
 export type SizeWindow = Pick<Window, 'addEventListener' | 'removeEventListener' | 'innerHeight' | 'innerWidth'>;
 

@@ -1,7 +1,7 @@
 import {BehaviorSubject, merge, fromEvent, Observable} from 'rxjs';
 import {map, share, filter} from 'rxjs/operators';
 import {window} from './window';
-import { ReadonlyBehaviorSubject } from './types';
+import {ReadonlyBehaviorSubject} from './types';
 
 const patchHistoryMethod = (method: 'pushState' | 'replaceState', eventName: string) => {
   const original = history[method];
@@ -88,4 +88,6 @@ const createServerLocation$ = (): BehaviorSubject<LocationState> =>
     ),
   );
 
-export const location$: ReadonlyBehaviorSubject<LocationState> = !!window ? createBrowserLocation$() : createServerLocation$();
+export const location$: ReadonlyBehaviorSubject<LocationState> = !!window
+  ? createBrowserLocation$()
+  : createServerLocation$();

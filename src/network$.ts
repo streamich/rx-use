@@ -2,7 +2,7 @@ import {onLine$} from './onLine$';
 import {ConnectionState, connection$} from './connection$';
 import {BehaviorSubject, merge} from 'rxjs';
 import {skip, map} from 'rxjs/operators';
-import { ReadonlyBehaviorSubject } from './types';
+import {ReadonlyBehaviorSubject} from './types';
 
 export interface NetworkState extends ConnectionState {
   since: Date;

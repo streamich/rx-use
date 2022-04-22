@@ -1,7 +1,7 @@
-import {filter, map} from "rxjs/operators";
-import {Subject} from "rxjs";
-import type {Observable} from "rxjs";
-import type {PubSub, TopicPredicate} from "./types";
+import {filter, map} from 'rxjs/operators';
+import {Subject} from 'rxjs';
+import type {Observable} from 'rxjs';
+import type {PubSub, TopicPredicate} from './types';
 
 export type Message = [topic: string | number, data: unknown, clock?: number];
 
@@ -9,14 +9,15 @@ export abstract class PubSubA implements Pick<PubSub, 'sub$'> {
   protected readonly bus$ = new Subject<Message>();
 
   public readonly sub$ = <Data = unknown>(topicPredicate: TopicPredicate<Data>): Observable<Data> => {
-    const predicate: (msg: Message) => boolean = (typeof topicPredicate === 'string') || (typeof topicPredicate === 'number')
-      ? (msg: Message) => msg[0] === topicPredicate
-      : ([topic, data]: Message) => topicPredicate(topic, data as Data);
+    const predicate: (msg: Message) => boolean =
+      typeof topicPredicate === 'string' || typeof topicPredicate === 'number'
+        ? (msg: Message) => msg[0] === topicPredicate
+        : ([topic, data]: Message) => topicPredicate(topic, data as Data);
     return this.bus$.pipe(
       filter(predicate),
       map(([topic, data]) => data),
     ) as Observable<Data>;
-  }
+  };
 
   public readonly end$ = new Subject<void>();
 
@@ -24,7 +25,7 @@ export abstract class PubSubA implements Pick<PubSub, 'sub$'> {
     this.bus$.complete();
     this.end$.next();
     this.end$.complete();
-  };
+  }
 }
 
 export class PubSubBC extends PubSubA implements PubSub {
@@ -84,7 +85,7 @@ export class PubSubM extends PubSubA implements PubSub {
 }
 
 const hasBC = typeof BroadcastChannel !== 'undefined';
-const hasLS = (typeof window !== 'undefined') && 'localStorage' in window;
+const hasLS = typeof window !== 'undefined' && 'localStorage' in window;
 
 /**
  * Specifies whether the pubsub channels are binary safe. If true, the data
@@ -98,14 +99,10 @@ const memoryCache: Record<string, PubSubM> = {};
 
 /**
  * Creates new cross-tab pubsub broadcast channel. Own messages are not received.
- * 
+ *
  * @param bus The name of the broadcast bus, where messages will be published.
  * @returns A PubSub instance that publishes messages to the specified bus.
  */
 export const pubsub = (bus: string): PubSub => {
-  return hasBC
-    ? new PubSubBC(bus)
-    : hasLS
-      ? new PubSubLS(bus)
-      : (memoryCache[bus] || (memoryCache[bus] = new PubSubM()));
+  return hasBC ? new PubSubBC(bus) : hasLS ? new PubSubLS(bus) : memoryCache[bus] || (memoryCache[bus] = new PubSubM());
 };
