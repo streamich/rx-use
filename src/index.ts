@@ -15,3 +15,5 @@ export * from './types';
 export * from './stdin$';
 export * from './fromStream';
 export * from './ansiKeys$';
+export * from './pubsub';
+export * from './tablist';

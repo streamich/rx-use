@@ -1,6 +1,9 @@
-import {isObservable, Observable, Observer, of} from "rxjs";
+import {isObservable, Observable, Observer, of} from 'rxjs';
 
-export type HtmlEventHandler<K extends keyof HTMLElementEventMap> = (this: HTMLObjectElement, ev: HTMLElementEventMap[K]) => any;
+export type HtmlEventHandler<K extends keyof HTMLElementEventMap> = (
+  this: HTMLObjectElement,
+  ev: HTMLElementEventMap[K],
+) => any;
 
 export type RxHtmlElementAttributes = Record<string, unknown | Observable<unknown>> & {
   on: {[K in keyof HTMLElementEventMap]?: Observer<HTMLElementEventMap[K]> | HtmlEventHandler<K>};
@@ -37,13 +40,13 @@ const appendChildren = (el: RxHtmlElement<any>, children?: RxHtmlElementChild[] 
     el.el.innerHTML = '';
     for (const child of children) {
       switch (typeof child) {
-        case "string":
-        case "number": {
+        case 'string':
+        case 'number': {
           const text = document.createTextNode(String(child));
           el.el.appendChild(text);
           break;
         }
-        case "object": {
+        case 'object': {
           if (child instanceof RxHtmlElement) {
             el.el.appendChild(child.el);
           } else if (child instanceof Array) {
@@ -56,7 +59,11 @@ const appendChildren = (el: RxHtmlElement<any>, children?: RxHtmlElementChild[] 
   });
 };
 
-export const el = <K extends keyof HTMLElementTagNameMap>(tag: K, attributes: RxHtmlElementAttributes, children?: RxHtmlElementChild[] | Observable<RxHtmlElementChild[]>) => {
+export const el = <K extends keyof HTMLElementTagNameMap>(
+  tag: K,
+  attributes: RxHtmlElementAttributes,
+  children?: RxHtmlElementChild[] | Observable<RxHtmlElementChild[]>,
+) => {
   const el = new RxHtmlElement<K>(tag);
   for (const [key, value] of Object.entries(attributes)) {
     if (key === 'on') continue;

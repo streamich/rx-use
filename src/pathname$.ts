@@ -1,7 +1,7 @@
 import {location$, LocationState} from './location$';
 import {BehaviorSubject} from 'rxjs';
 import {map, filter} from 'rxjs/operators';
-import { ReadonlyBehaviorSubject } from './types';
+import {ReadonlyBehaviorSubject} from './types';
 
 const selector = ({pathname}: LocationState) => pathname;
 
