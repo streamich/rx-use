@@ -3,13 +3,13 @@ import {Subject} from "rxjs";
 import type {Observable} from "rxjs";
 import type {PubSub, TopicPredicate} from "./types";
 
-type Message = [topic: string, data: unknown];
+type Message = [topic: string | number, data: unknown];
 
 export abstract class PubSubA implements Pick<PubSub, 'sub$'> {
   protected readonly bus$ = new Subject<Message>();
 
   public readonly sub$ = <Data = unknown>(topicPredicate: TopicPredicate<Data>): Observable<Data> => {
-    const predicate: (msg: Message) => boolean = typeof topicPredicate === 'string'
+    const predicate: (msg: Message) => boolean = (typeof topicPredicate === 'string') || (typeof topicPredicate === 'number')
       ? (msg: Message) => msg[0] === topicPredicate
       : ([topic, data]: Message) => topicPredicate(topic, data as Data);
     return this.bus$.pipe(
@@ -26,12 +26,11 @@ export class PubSubBC extends PubSubA implements PubSub {
     super();
     this.ch = new BroadcastChannel(bus);
     this.ch.onmessage = (e) => {
-      if (!Array.isArray(e.data) || e.data.length !== 2 || typeof e.data[0] !== 'string') return;
       this.bus$.next(e.data as Message);
     };
   }
 
-  public readonly pub = (topic: string, data: unknown) => {
+  public readonly pub = (topic: string | number, data: unknown) => {
     this.ch.postMessage([topic, data]);
   };
 
@@ -45,7 +44,6 @@ export class PubSubLS extends PubSubA implements PubSub {
     if (e.key !== this.bus) return;
     if (!e.newValue) return;
     const msg = JSON.parse(e.newValue);
-    if (!Array.isArray(msg) || msg.length !== 2 || typeof msg[0] !== 'string') return;
     this.bus$.next(msg as Message);
   };
 
@@ -54,7 +52,7 @@ export class PubSubLS extends PubSubA implements PubSub {
     window.addEventListener('storage', this.listener);
   }
 
-  public readonly pub = (topic: string, data: unknown) => {
+  public readonly pub = (topic: string | number, data: unknown) => {
     const msg: Message = [topic, data];
     const LS = localStorage;
     LS.setItem(this.bus, JSON.stringify(msg));
@@ -67,7 +65,7 @@ export class PubSubLS extends PubSubA implements PubSub {
 }
 
 export class PubSubM extends PubSubA implements PubSub {
-  public readonly pub = (topic: string, data: unknown) => {
+  public readonly pub = (topic: string | number, data: unknown) => {
     const msg: Message = [topic, data];
     this.bus$.next(msg);
   };
