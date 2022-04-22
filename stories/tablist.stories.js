@@ -7,8 +7,10 @@ export default {
   title: 'tab list',
 };
 
-const channel = pubsub('test');
-const list = new TabList(channel);
+const bus = pubsub('test');
+const list = new TabList({
+  bus,
+});
 
 list.leader$.subscribe((leader) => {
   console.log('leader:', leader);
@@ -16,7 +18,7 @@ list.leader$.subscribe((leader) => {
 
 export const Default = () => {
   const incoming$ = new BehaviorSubject([]);
-  channel.sub$(4).subscribe((data) => {
+  bus.sub$(4).subscribe((data) => {
     console.log('data received:', data);
     incoming$.next(incoming$.getValue().concat(data));
   });
