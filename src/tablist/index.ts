@@ -28,7 +28,7 @@ export interface TabListDependencies {
 
 export class TabList {
   /** Unique ID of the current browser tab instance. Zero is not allowed. */
-  public readonly id: number = Math.ceil(Math.random() * 0xFFFFFFFFFFFFFF);
+  public readonly id: number = (Date.now() * 0x100) + Math.floor(Math.random() * 256);
   public readonly leader$ = new BehaviorSubject<number>(0);
   public readonly peers: PeerList = {};
   protected readonly clock$: Observable<number>;
@@ -77,7 +77,7 @@ export class TabList {
     for (const [key, time] of Object.entries(this.peers)) {
       const id = Number(key);
       if ((time + this.pingTimeout < now) || (id === this.id)) delete this.peers[id];
-      if (leader < id) leader = id;
+      if (leader > id) leader = id;
     }
     if (leader !== this.leader$.getValue()) this.leader$.next(leader);
     return leader;
