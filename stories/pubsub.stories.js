@@ -6,9 +6,11 @@ export default {
   title: 'pubsub',
 };
 
+const channel = pubsub('test');
+
 export const Default = () => {
   const incoming$ = new BehaviorSubject([]);
-  pubsub.sub$('test').subscribe((data) => {
+  channel.sub$('test').subscribe((data) => {
     console.log('data received:', data);
     incoming$.next(incoming$.getValue().concat(data));
   });
@@ -19,7 +21,7 @@ export const Default = () => {
     el('button', {type: 'button', on: {
       click: (ev) => {
         console.log('sending:', input.el.value);
-        pubsub.pub('test', input.el.value);
+        channel.pub('test', input.el.value);
       },
     }}, 'Send message'),
     el('div', {}, [

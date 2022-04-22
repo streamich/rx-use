@@ -74,10 +74,26 @@ export class PubSubM extends PubSubA implements PubSub {
   public readonly end = () => {};
 }
 
-const bus = 'rx-use';
+const hasBC = typeof BroadcastChannel !== 'undefined';
+const hasLS = (typeof window !== 'undefined') && 'localStorage' in window;
 
-export const pubsub = typeof BroadcastChannel !== 'undefined'
-  ? new PubSubBC(bus)
-  : (typeof window !== 'undefined') && 'localStorage' in window
-    ? new PubSubLS(bus)
-    : new PubSubM();
+/**
+ * Specifies whether the pubsub channels are binary safe. If true, the data
+ * can be binary blobs such as Uint8Array or ArrayBuffer. If false, the user
+ * has to make sure the data is JSON serializable.
+ */
+export const binSafe = hasBC || !hasLS;
+
+/**
+ * Creates new cross-tab pubsub broadcast channel. Own messages are not received.
+ * 
+ * @param bus The name of the broadcast bus, where messages will be published.
+ * @returns A PubSub instance that publishes messages to the specified bus.
+ */
+export const pubsub = (bus: string): PubSub => {
+  return hasBC
+    ? new PubSubBC(bus)
+    : hasLS
+      ? new PubSubLS(bus)
+      : new PubSubM();
+};
