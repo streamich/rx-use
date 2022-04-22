@@ -56,8 +56,9 @@ export class PubSubLS extends PubSubA implements PubSub {
 
   public readonly pub = (topic: string, data: unknown) => {
     const msg: Message = [topic, data];
-    localStorage.setItem(this.bus, JSON.stringify(msg));
-    localStorage.removeItem(this.bus);
+    const LS = localStorage;
+    LS.setItem(this.bus, JSON.stringify(msg));
+    LS.removeItem(this.bus);
   };
 
   public readonly end = () => {
@@ -84,6 +85,9 @@ const hasLS = (typeof window !== 'undefined') && 'localStorage' in window;
  */
 export const binSafe = hasBC || !hasLS;
 
+/** Cache of global in-memory pubsub instances. */
+const memoryCache: Record<string, PubSubM> = {};
+
 /**
  * Creates new cross-tab pubsub broadcast channel. Own messages are not received.
  * 
@@ -95,5 +99,5 @@ export const pubsub = (bus: string): PubSub => {
     ? new PubSubBC(bus)
     : hasLS
       ? new PubSubLS(bus)
-      : new PubSubM();
+      : (memoryCache[bus] || (memoryCache[bus] = new PubSubM()));
 };
