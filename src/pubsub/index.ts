@@ -3,7 +3,7 @@ import {Subject} from "rxjs";
 import type {Observable} from "rxjs";
 import type {PubSub, TopicPredicate} from "./types";
 
-type Message = [topic: string | number, data: unknown];
+type Message = [topic: string | number, data: unknown, clock?: number];
 
 export abstract class PubSubA implements Pick<PubSub, 'sub$'> {
   protected readonly bus$ = new Subject<Message>();
@@ -40,6 +40,8 @@ export class PubSubBC extends PubSubA implements PubSub {
 }
 
 export class PubSubLS extends PubSubA implements PubSub {
+  private clock = 0;
+
   private listener = (e: StorageEvent) => {
     if (e.key !== this.bus) return;
     if (!e.newValue) return;
@@ -53,7 +55,7 @@ export class PubSubLS extends PubSubA implements PubSub {
   }
 
   public readonly pub = (topic: string | number, data: unknown) => {
-    const msg: Message = [topic, data];
+    const msg: Message = [topic, data, this.clock++];
     const LS = localStorage;
     LS.setItem(this.bus, JSON.stringify(msg));
     LS.removeItem(this.bus);
