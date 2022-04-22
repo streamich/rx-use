@@ -1,3 +1,21 @@
+# [1.8.0](https://github.com/streamich/rx-use/compare/v1.7.0...v1.8.0) (2022-04-22)
+
+
+### Bug Fixes
+
+* 🐛 allow re-sending duplicate mussages over localStorage ([ec7bcb3](https://github.com/streamich/rx-use/commit/ec7bcb39212e15ffe468c990f4bcbc0079b0110a))
+
+
+### Features
+
+* 🎸 add ability for tabs to establish call channels ([130ac0b](https://github.com/streamich/rx-use/commit/130ac0b06202070f68c4e6afbf72697bc3048bba))
+* 🎸 add dependency injection to tablist ([c21aa92](https://github.com/streamich/rx-use/commit/c21aa926b7af38c7bd608a4664e69dd950661b88))
+* 🎸 allow broadcast channels to be numbers ([e7432a6](https://github.com/streamich/rx-use/commit/e7432a61365ae00089a61b2f73f7172f41d467fc))
+* 🎸 elect oldest tab a the leader ([5a62949](https://github.com/streamich/rx-use/commit/5a62949287cf8e05eed1c8b0b77e0d4015caeb29))
+* 🎸 implement TabList ([04b9608](https://github.com/streamich/rx-use/commit/04b960830f136e275e024991dcf09124b2f6e646))
+* 🎸 make in-memory pubsub busses global ([1edaf30](https://github.com/streamich/rx-use/commit/1edaf300623c529d34f185abd1e3f226c46b785e))
+* 🎸 make pubsub channel name configurable ([55dbae1](https://github.com/streamich/rx-use/commit/55dbae19e9bbed3e147d88ed83b5bc430e7aa560))
+
 # [1.7.0](https://github.com/streamich/rx-use/compare/v1.6.0...v1.7.0) (2022-04-20)
 
 
