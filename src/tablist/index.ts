@@ -22,7 +22,7 @@ const enum MSG {
 }
 
 type HelloMessage = number;
-type PingMessage = number;
+type HeartbeatMessage = number;
 type ListMessage = [id: number, peers: PeerList];
 type CallMessage = [caller: number, callee: number];
 
@@ -79,7 +79,7 @@ export class TabList {
     this.clock$.subscribe(this.ping);
 
     // Listen to heartbeats from other tabs.
-    bus.sub$<PingMessage>(MSG.HEARTBEAT).subscribe((id) => {
+    bus.sub$<HeartbeatMessage>(MSG.HEARTBEAT).subscribe((id) => {
       const now = Date.now();
       this.mergePeers({[id]: now}, now);
     });
