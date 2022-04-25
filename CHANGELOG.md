@@ -1,3 +1,10 @@
+## [1.8.1](https://github.com/streamich/rx-use/compare/v1.8.0...v1.8.1) (2022-04-25)
+
+
+### Bug Fixes
+
+* 🐛 rename type ([85e451d](https://github.com/streamich/rx-use/commit/85e451de77e80f5b8566f25bf71e302d008c8135))
+
 # [1.8.0](https://github.com/streamich/rx-use/compare/v1.7.0...v1.8.0) (2022-04-22)
 
 
