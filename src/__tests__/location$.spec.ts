@@ -1,5 +1,5 @@
 import {location$, LocationFields, HistoryFields} from '../location$';
-const {window, _listeners} = require('../window');
+const {wnd: window, _listeners} = require('../window');
 
 type Listener = {event: string; listener: (...args: any) => void};
 
@@ -34,7 +34,7 @@ jest.mock('../window', () => {
     },
   };
   return {
-    window: wnd,
+    wnd,
     _listeners: listeners,
     _removedListeners: removedListeners,
   };

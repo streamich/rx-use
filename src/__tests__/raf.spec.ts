@@ -23,7 +23,7 @@ jest.mock('../window', () => {
     },
   };
   return {
-    window: wnd,
+    wnd,
     listeners,
     flush,
   };

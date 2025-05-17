@@ -1,5 +1,5 @@
 import {colorSchemeNoPreference$} from '../colorSchemeNoPreference$';
-const {window, _query, _addListener, _removeListener, _mql} = require('../window');
+const {_query, _addListener, _mql} = require('../window');
 
 jest.mock('../window', () => {
   const _query: string[] = [];
@@ -27,7 +27,7 @@ jest.mock('../window', () => {
     },
   } as any;
   return {
-    window: wnd,
+    wnd,
     _query,
     _addListener,
     _removeListener,

@@ -113,6 +113,7 @@ export class TabList {
   private startCall(caller: number, callee: number): PubSub {
     const callNumber = this.getCallNumber(caller, callee);
     if (!this.calls[callNumber]) {
+      // tslint:disable-next-line:no-this-assignment
       const self = this;
       const channel = this.deps.newBus(callNumber);
       let endReceived = false;

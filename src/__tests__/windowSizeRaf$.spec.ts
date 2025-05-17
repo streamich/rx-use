@@ -1,6 +1,6 @@
 import {SizeWindow} from '../windowSize$';
 import {windowSizeRaf$} from '../windowSizeRaf$';
-const {window, _listeners} = require('../window');
+const {wnd, _listeners} = require('../window');
 
 type Listener = {event: string; listener: (...args: any) => void};
 
@@ -20,7 +20,7 @@ jest.mock('../window', () => {
     },
   };
   return {
-    window: wnd,
+    wnd,
     _listeners: listeners,
     _removedListeners: removedListeners,
   };
@@ -55,8 +55,8 @@ test('emits new value when window resizes', () => {
   const spy = jest.fn();
   windowSizeRaf$.subscribe(spy);
   expect(spy).toHaveBeenCalledTimes(1);
-  window.innerWidth = 1024;
-  window.innerHeight = 768;
+  wnd.innerWidth = 1024;
+  wnd.innerHeight = 768;
   listeners[0].listener(new Event('resize'));
   expect(spy).toHaveBeenCalledTimes(2);
 });
@@ -84,20 +84,20 @@ test('multiple resizes with multiple subscribers work', () => {
   expect(spy1).toHaveBeenCalledTimes(1);
   expect(spy2).toHaveBeenCalledTimes(1);
 
-  window.innerWidth = 1111;
-  window.innerHeight = 2222;
+  wnd.innerWidth = 1111;
+  wnd.innerHeight = 2222;
   listeners[0].listener(new Event('resize'));
 
   expect(spy1).toHaveBeenCalledTimes(2);
   expect(spy2).toHaveBeenCalledTimes(2);
 
-  window.innerWidth = 333;
+  wnd.innerWidth = 333;
   listeners[0].listener(new Event('resize'));
 
   expect(spy1).toHaveBeenCalledTimes(3);
   expect(spy2).toHaveBeenCalledTimes(3);
 
-  window.innerHeight = 555;
+  wnd.innerHeight = 555;
   listeners[0].listener(new Event('resize'));
 
   expect(spy1).toHaveBeenCalledTimes(4);
@@ -105,7 +105,7 @@ test('multiple resizes with multiple subscribers work', () => {
 
   sub1.unsubscribe();
 
-  window.innerHeight = 666;
+  wnd.innerHeight = 666;
   listeners[0].listener(new Event('resize'));
 
   expect(spy1).toHaveBeenCalledTimes(4);
@@ -113,7 +113,7 @@ test('multiple resizes with multiple subscribers work', () => {
 
   sub2.unsubscribe();
 
-  window.innerHeight = 777;
+  wnd.innerHeight = 777;
   listeners[0].listener(new Event('resize'));
 
   expect(spy1).toHaveBeenCalledTimes(4);

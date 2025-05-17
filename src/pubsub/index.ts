@@ -1,6 +1,5 @@
 import {filter, map} from 'rxjs/operators';
-import {Subject} from 'rxjs';
-import type {Observable} from 'rxjs';
+import {Subject, type Observable} from 'rxjs';
 import type {PubSub, TopicPredicate} from './types';
 
 export type Message = [topic: string | number, data: unknown, clock?: number];
