@@ -1,3 +1,11 @@
+## [1.8.2](https://github.com/streamich/rx-use/compare/v1.8.1...v1.8.2) (2025-05-17)
+
+
+### Bug Fixes
+
+* 🐛 check for window global directly ([0d44a47](https://github.com/streamich/rx-use/commit/0d44a47735d990d1f9f5ee55a692d881921ba700))
+* 🐛 fixup tests and address linter issues ([7f113a0](https://github.com/streamich/rx-use/commit/7f113a0ae80aecc06cf287990d724fe37969533e))
+
 ## [1.8.1](https://github.com/streamich/rx-use/compare/v1.8.0...v1.8.1) (2022-04-25)
 
 
