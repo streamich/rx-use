@@ -19,8 +19,7 @@ export type NavigatorWithConnection = Navigator & {
   webkitConnection?: Connection;
 };
 
-const navigator: NavigatorWithConnection | undefined =
-  (wnd && (wnd.navigator as NavigatorWithConnection)) || undefined;
+const navigator: NavigatorWithConnection | undefined = (wnd && (wnd.navigator as NavigatorWithConnection)) || undefined;
 const connection: Connection | undefined =
   navigator && (navigator.connection || navigator.mozConnection || navigator.webkitConnection)
     ? navigator.connection || navigator.mozConnection || navigator.webkitConnection
