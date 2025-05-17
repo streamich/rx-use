@@ -1,4 +1,4 @@
-import {window} from './window';
+import {wnd} from './window';
 import {BehaviorSubject, fromEvent} from 'rxjs';
 import {share, map, filter} from 'rxjs/operators';
 import {ReadonlyBehaviorSubject} from './types';
@@ -13,16 +13,16 @@ export interface WindowSizeState {
 }
 
 const createBrowserWindowSize$ = () => {
-  if (!isWindow(window)) return new BehaviorSubject({width: 0, height: 0});
+  if (!isWindow(wnd)) return new BehaviorSubject({width: 0, height: 0});
 
-  const w = window;
+  const w = wnd;
   const state = (): WindowSizeState => ({
     width: w.innerWidth,
     height: w.innerHeight,
   });
   const windowSize$ = new BehaviorSubject(state());
 
-  fromEvent(window, 'resize')
+  fromEvent(wnd, 'resize')
     .pipe(
       filter(() => {
         const {width, height} = windowSize$.getValue();

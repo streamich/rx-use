@@ -1,6 +1,6 @@
 import {BehaviorSubject, merge, fromEvent, Observable} from 'rxjs';
 import {map, share, filter} from 'rxjs/operators';
-import {window} from './window';
+import {wnd} from './window';
 import {ReadonlyBehaviorSubject} from './types';
 
 const patchHistoryMethod = (method: 'pushState' | 'replaceState', eventName: string) => {
@@ -10,12 +10,12 @@ const patchHistoryMethod = (method: 'pushState' | 'replaceState', eventName: str
     const result = original.apply(this, arguments as any);
     const event = new Event(eventName);
     (event as any).state = state;
-    window!.dispatchEvent(event);
+    wnd!.dispatchEvent(event);
     return result;
   };
 };
 
-if (!!window) {
+if (!!wnd) {
   patchHistoryMethod('pushState', 'rx-pushstate');
   patchHistoryMethod('replaceState', 'rx-replacestate');
 }
@@ -51,16 +51,16 @@ const buildState = (event: LocationStateEvent, location: LocationFields, history
 };
 
 const createBrowserLocation$ = (): BehaviorSubject<LocationState> => {
-  const location$ = new BehaviorSubject(buildState('load', window!.location, window!.history));
+  const location$ = new BehaviorSubject(buildState('load', wnd!.location, wnd!.history));
   merge(
-    fromEvent(window!, 'popstate').pipe(map(() => 'pop')) as Observable<LocationStateEvent>,
-    fromEvent(window!, 'rx-pushstate').pipe(map(() => 'push')) as Observable<LocationStateEvent>,
-    fromEvent(window!, 'rx-replacestate').pipe(map(() => 'replace')) as Observable<LocationStateEvent>,
+    fromEvent(wnd!, 'popstate').pipe(map(() => 'pop')) as Observable<LocationStateEvent>,
+    fromEvent(wnd!, 'rx-pushstate').pipe(map(() => 'push')) as Observable<LocationStateEvent>,
+    fromEvent(wnd!, 'rx-replacestate').pipe(map(() => 'replace')) as Observable<LocationStateEvent>,
   )
     .pipe(
       share(),
-      filter(() => window!.location.href !== location$.getValue().href),
-      map((event) => buildState(event, window!.location, window!.history)),
+      filter(() => wnd!.location.href !== location$.getValue().href),
+      map((event) => buildState(event, wnd!.location, wnd!.history)),
     )
     .subscribe(location$);
   return location$;
@@ -88,6 +88,6 @@ const createServerLocation$ = (): BehaviorSubject<LocationState> =>
     ),
   );
 
-export const location$: ReadonlyBehaviorSubject<LocationState> = !!window
+export const location$: ReadonlyBehaviorSubject<LocationState> = !!wnd
   ? createBrowserLocation$()
   : createServerLocation$();

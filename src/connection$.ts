@@ -1,4 +1,4 @@
-import {window} from './window';
+import {wnd} from './window';
 import {BehaviorSubject, fromEvent} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {ReadonlyBehaviorSubject} from './types';
@@ -20,7 +20,7 @@ export type NavigatorWithConnection = Navigator & {
 };
 
 const navigator: NavigatorWithConnection | undefined =
-  (window && (window.navigator as NavigatorWithConnection)) || undefined;
+  (wnd && (wnd.navigator as NavigatorWithConnection)) || undefined;
 const connection: Connection | undefined =
   navigator && (navigator.connection || navigator.mozConnection || navigator.webkitConnection)
     ? navigator.connection || navigator.mozConnection || navigator.webkitConnection
