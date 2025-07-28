@@ -16,4 +16,5 @@ export * from './stdin$';
 export * from './fromStream';
 export * from './ansiKeys$';
 export * from './pubsub';
+export * from './startTyping$';
 export * from './tablist';
