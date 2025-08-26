@@ -14,7 +14,7 @@ export abstract class PubSubA<Data = unknown> implements Pick<PubSub<Data>, 'sub
         : ([topic, data]: Message) => topicPredicate(topic, data as Data);
     return this.bus$.pipe(
       filter(predicate),
-      map(([topic, data]) => data),
+      map(([, data]) => data),
     ) as Observable<Data>;
   };
 
@@ -108,5 +108,9 @@ const memoryCache: Record<string, PubSubM> = {};
  * @returns A PubSub instance that publishes messages to the specified bus.
  */
 export const pubsub = <Data = unknown>(bus: string): PubSub<Data> => {
-  return hasBC ? new PubSubBC<Data>(bus) : hasLS ? new PubSubLS<Data>(bus) : memoryCache[bus] || (memoryCache[bus] = new PubSubM<Data>());
+  return hasBC
+    ? new PubSubBC<Data>(bus)
+    : hasLS
+    ? new PubSubLS<Data>(bus)
+    : memoryCache[bus] || (memoryCache[bus] = new PubSubM<Data>());
 };

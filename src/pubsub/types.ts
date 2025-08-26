@@ -22,7 +22,6 @@ export interface PubSub<Data = unknown> {
    */
   sub$: (topicPredicate: TopicPredicate<Data>) => Observable<Data>;
 
-
   end: () => void;
   end$: Observable<void>;
 }
