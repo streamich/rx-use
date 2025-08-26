@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/streamich/rx-use/compare/v1.8.2...v1.9.0) (2025-08-26)
+
+
+### Features
+
+* 🎸 allow loopback in .pub() methods and add generics ([37a2a58](https://github.com/streamich/rx-use/commit/37a2a583cc54da5b0f9c43ebe9c9b4c925a3e144))
+
 ## [1.8.2](https://github.com/streamich/rx-use/compare/v1.8.1...v1.8.2) (2025-05-17)
 
 
