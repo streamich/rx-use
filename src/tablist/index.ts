@@ -59,33 +59,33 @@ export class TabList {
     this.pingTimeout = clock * 5;
 
     // Listen for new peers joining.
-    bus.sub$<HelloMessage>(MSG.HELLO).subscribe((id) => {
+    (bus.sub$(MSG.HELLO) as Observable<number>).subscribe((id) => {
       const now = Date.now();
       this.mergePeers({[id]: now}, now);
-      bus.pub<ListMessage>(MSG.LIST, [this.id, this.peers]);
+      bus.pub(MSG.LIST, [this.id, this.peers]);
     });
 
     // Listen for peer list updates.
-    bus.sub$<ListMessage>(MSG.LIST).subscribe(([id, peers]) => {
+    (bus.sub$(MSG.LIST) as Observable<ListMessage>).subscribe(([id, peers]) => {
       const now = Date.now();
       peers[id] = now;
       this.mergePeers(peers, now);
     });
 
     // Join the swarm.
-    bus.pub<HelloMessage>(MSG.HELLO, this.id);
+    bus.pub(MSG.HELLO, this.id);
 
     // Send heartbeats to other tabs.
     this.clock$.subscribe(this.ping);
 
     // Listen to heartbeats from other tabs.
-    bus.sub$<HeartbeatMessage>(MSG.HEARTBEAT).subscribe((id) => {
+    (bus.sub$(MSG.HEARTBEAT) as Observable<number>).subscribe((id) => {
       const now = Date.now();
       this.mergePeers({[id]: now}, now);
     });
 
     // Setup a bi-directional channel for incoming calls.
-    bus.sub$<CallMessage>(MSG.CALL).subscribe(([caller, callee]) => {
+    (bus.sub$(MSG.CALL) as Observable<[number, number]>).subscribe(([caller, callee]) => {
       if (callee !== this.id) return;
       const call = this.startCall(caller, callee);
       call.pub(MSG.CALL_ACK, 0);
@@ -118,7 +118,7 @@ export class TabList {
       const channel = this.deps.newBus(callNumber);
       let endReceived = false;
       const call = new (class Call extends PubSubA {
-        protected readonly s = channel.sub$<Message>(MSG.CALL_MSG).subscribe(this.bus$);
+        protected readonly s = (channel.sub$(MSG.CALL_MSG) as Observable<Message>).subscribe(this.bus$);
         public readonly pub = <Data = unknown>(topic: string | number, data: Data): void =>
           channel.pub(MSG.CALL_MSG, [topic, data]);
         public readonly end = () => {
@@ -130,7 +130,7 @@ export class TabList {
         };
       })();
       channel
-        .sub$<number>(MSG.CALL_END)
+        .sub$(MSG.CALL_END)
         .pipe(take(1))
         .subscribe(() => {
           endReceived = true;
@@ -149,8 +149,8 @@ export class TabList {
     return from(
       (async () => {
         const call = this.startCall(this.id, tabId);
-        const ack = firstValueFrom(call.sub$<number>(MSG.CALL_ACK));
-        this.deps.bus.pub<CallMessage>(MSG.CALL, [this.id, tabId]);
+        const ack = firstValueFrom(call.sub$(MSG.CALL_ACK));
+        this.deps.bus.pub(MSG.CALL, [this.id, tabId]);
         let timer;
         const timeout = new Promise((resolve, reject) => {
           timer = setTimeout(() => {

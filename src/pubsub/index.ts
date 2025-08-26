@@ -4,7 +4,7 @@ import type {PubSub, TopicPredicate} from './types';
 
 export type Message = [topic: string | number, data: unknown, clock?: number];
 
-export abstract class PubSubA implements Pick<PubSub, 'sub$'> {
+export abstract class PubSubA<Data = unknown> implements Pick<PubSub<Data>, 'sub$'> {
   protected readonly bus$ = new Subject<Message>();
 
   public readonly sub$ = <Data = unknown>(topicPredicate: TopicPredicate<Data>): Observable<Data> => {
@@ -14,7 +14,7 @@ export abstract class PubSubA implements Pick<PubSub, 'sub$'> {
         : ([topic, data]: Message) => topicPredicate(topic, data as Data);
     return this.bus$.pipe(
       filter(predicate),
-      map(([topic, data]) => data),
+      map(([, data]) => data),
     ) as Observable<Data>;
   };
 
@@ -27,7 +27,7 @@ export abstract class PubSubA implements Pick<PubSub, 'sub$'> {
   }
 }
 
-export class PubSubBC extends PubSubA implements PubSub {
+export class PubSubBC<Data = unknown> extends PubSubA<Data> implements PubSub<Data> {
   public readonly ch: BroadcastChannel;
 
   constructor(public readonly bus: string) {
@@ -38,8 +38,10 @@ export class PubSubBC extends PubSubA implements PubSub {
     };
   }
 
-  public readonly pub = (topic: string | number, data: unknown) => {
-    this.ch.postMessage([topic, data]);
+  public readonly pub = (topic: string | number, data: unknown, loopback?: boolean) => {
+    const msg: Message = [topic, data];
+    this.ch.postMessage(msg);
+    if (loopback) this.bus$.next(msg);
   };
 
   public readonly end = () => {
@@ -48,7 +50,7 @@ export class PubSubBC extends PubSubA implements PubSub {
   };
 }
 
-export class PubSubLS extends PubSubA implements PubSub {
+export class PubSubLS<Data = unknown> extends PubSubA<Data> implements PubSub<Data> {
   private clock = 0;
 
   private listener = (e: StorageEvent) => {
@@ -63,11 +65,12 @@ export class PubSubLS extends PubSubA implements PubSub {
     window.addEventListener('storage', this.listener);
   }
 
-  public readonly pub = (topic: string | number, data: unknown) => {
+  public readonly pub = (topic: string | number, data: unknown, loopback?: boolean) => {
     const msg: Message = [topic, data, this.clock++];
     const LS = localStorage;
     LS.setItem(this.bus, JSON.stringify(msg));
     LS.removeItem(this.bus);
+    if (loopback) this.bus$.next(msg);
   };
 
   public readonly end = () => {
@@ -76,10 +79,11 @@ export class PubSubLS extends PubSubA implements PubSub {
   };
 }
 
-export class PubSubM extends PubSubA implements PubSub {
-  public readonly pub = (topic: string | number, data: unknown) => {
+export class PubSubM<Data = unknown> extends PubSubA<Data> implements PubSub<Data> {
+  public readonly pub = (topic: string | number, data: unknown, loopback?: boolean) => {
     const msg: Message = [topic, data];
     this.bus$.next(msg);
+    if (loopback) this.bus$.next(msg);
   };
 }
 
@@ -97,11 +101,16 @@ export const binSafe = hasBC || !hasLS;
 const memoryCache: Record<string, PubSubM> = {};
 
 /**
- * Creates new cross-tab pubsub broadcast channel. Own messages are not received.
+ * Creates new cross-tab pubsub broadcast channel. Own messages are not received
+ * by default, set `loopback` to true to receive your own messages.
  *
  * @param bus The name of the broadcast bus, where messages will be published.
  * @returns A PubSub instance that publishes messages to the specified bus.
  */
-export const pubsub = (bus: string): PubSub => {
-  return hasBC ? new PubSubBC(bus) : hasLS ? new PubSubLS(bus) : memoryCache[bus] || (memoryCache[bus] = new PubSubM());
+export const pubsub = <Data = unknown>(bus: string): PubSub<Data> => {
+  return hasBC
+    ? new PubSubBC<Data>(bus)
+    : hasLS
+    ? new PubSubLS<Data>(bus)
+    : memoryCache[bus] || (memoryCache[bus] = new PubSubM<Data>());
 };
