@@ -18,6 +18,7 @@ Sensor and side-effect library for [`rxjs`](https://rxjs-dev.firebaseapp.com/). 
   - [`colorSchemeNoPreference$`](./docs/colorSchemeNoPreference$.md) &mdash; whether user has no preference for color scheme.
 - `stdin$` &mdash; listen for data coming from STDIN.
 - `ansiKeys$` &mdash; listen for ANSI terminal key presses.
+- [`startTyping$`](./docs/startTyping$.md) &mdash; fires when user starts typing in browser, but no input field is selected.
 - `pubsub` &mdash; publish/subscribe mechanism for inter-tab communication in browser.
 - [`tablist`](./src/tablist/README.md) &mdash; keeps track of all same origin tabs, elects leader and allows to send messages to all tabs or create private channels between any two tabs.
 
